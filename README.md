@@ -2,7 +2,7 @@
 
 # My repositories
 
-* https://github.com/trolleway/google-streetview-upload - Upload a spherical panoramic photos to Google Street View
+* [google-streetview-upload](https://github.com/trolleway/google-streetview-upload) - Upload a spherical panoramic photos to Google Street View
 * https://github.com/trolleway/geodata - Sources (QGIS projects) for rail transport maps on Wikipedia
 * https://github.com/trolleway/russian-railways-simplegeodata - Simplified geodata for maps of Russian Railways for medium-scale maps
 * https://github.com/trolleway/osmot - generator of public transport map from Openstreetmap (pbf to geojson with captions)
