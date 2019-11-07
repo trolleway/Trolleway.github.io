@@ -12,5 +12,10 @@
 * https://github.com/trolleway/video_join - GUI for loseless joining video files using ffmpeg
 * https://github.com/trolleway/vector_refrencing_to_raster - align vector geodata to aerial imagery in ogr2ogr
 * https://github.com/trolleway/photohosting_duplicates - check if photos already uploaded to flickr.com or mapillary.com
+* https://github.com/trolleway/syany - карта Сьян с индексным справочником
+* https://github.com/trolleway/pgshadows - rapaired generating building shadows in PostGIS
+* https://github.com/trolleway/map-in-picture - overlay map images on photo
+* https://github.com/trolleway/dpof_photo_move - sort photos from you camera to two folder using DPOF mark
+* https://github.com/trolleway/theta_tools - rotate photos from Ricoh Theta panoramics camera
 
 
