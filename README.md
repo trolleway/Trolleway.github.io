@@ -1,5 +1,7 @@
 ## trolleway.github.io
 
+[Как снимать панорамы улиц самому. Презентация](https://drive.google.com/open?id=1QLJ73f-366P-PbFvqv9hqco_-QXlz-8-66FU_eubJxw)
+
 # My repositories
 
 * [google-streetview-upload](https://github.com/trolleway/google-streetview-upload) - Upload a spherical panoramic photos to Google Street View
