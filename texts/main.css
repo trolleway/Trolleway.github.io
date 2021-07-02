@@ -1,6 +1,7 @@
 /* As hex codes */
 :root {
   --color-primary-0: #AA8039;
+  --color-primary-1: #FFE0AA;
 }
 
 body { background-color: var(--color-primary-0); }
