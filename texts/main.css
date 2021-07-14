@@ -11,6 +11,13 @@ body { background-color: var(--color-primary-1); }
   height: auto;
 }
 
+
+figure img {
+  max-width: 100%;
+  height: auto;
+}
+
+
 /* CSS - Cascading Style Sheet */
 /* Palette color codes */
 /* Palette URL: http://paletton.com/#uid=60R0u0kllllaFw0g0qFqFg0w0aF */
