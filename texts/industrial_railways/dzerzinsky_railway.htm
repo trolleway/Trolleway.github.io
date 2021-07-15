@@ -7,31 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- for flexbox-->
 <style>
-* {
-  box-sizing: border-box;
-}
 
-/* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-  }
-}
 </style>
 </head>
 <body>
@@ -54,7 +30,7 @@
   <h1>Железная дорога Панки - Дзержинский</h1>
   <h2>Описание линии</h2>
   
-  <span class="text><span class="ru">
+  <span class="row><span class="column">
   Грузовая железная дорога Люберцы - Мальчики - Яничкино - Дзержинский проходит по промзонам с внешней границы Москвы, активно используется, и имеет много точек с которых можно смотреть на поезда. 
   От неё отходят действующие ветки ППЖТ:
   <ul>
@@ -67,7 +43,7 @@
   В старых текстах ветка называлась Панки - Дзержинский, потому что по такому маршруту ходили электрички. В Панках был отдельный тупик у платформы для электрички. 
   К грузовому движению Панки сейчас не имеют отношения. 
   </span>
-  <span class="en">
+  <span class="column">
     Railway line Lubertsy - Malchiki - Yanichkino - Dzerzinsky runs through industrial areas at Moscow outskirts. It has frequent traffic and many points easy to photograph trains. </br>
   Railway line is owned by RZD, it has passenger service by EMU until 1996. Passenger route was Panki-Dzerzinsky. After 1996 electrification for freight train kept to Yanuchkino station.
   
