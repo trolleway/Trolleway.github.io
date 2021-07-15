@@ -138,7 +138,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_respon
 }
 
 /* Create two equal columns that floats next to each other */
-.ru .en {
+.column {
   float: left;
   width: 50%;
   padding: 10px;
@@ -146,7 +146,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_respon
 }
 
 /* Clear floats after the columns */
-.text:after  {
+.row:after {
   content: "";
   display: table;
   clear: both;
@@ -154,7 +154,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_respon
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-  .ru .en {
+  .column {
     width: 100%;
   }
 }
