@@ -2,6 +2,8 @@
 :root {
   --color-primary-0: #AA8039;
   --color-primary-1: #FFE0AA;
+  --color-secondary-1-0: #AA9339;
+  --color-secondary-2-0: #AA6539;
 }
 
 body { background-color: var(--color-primary-1); }
@@ -138,15 +140,22 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_respon
 }
 
 /* Create two equal columns that floats next to each other */
-.column {
+.ru {
   float: left;
   width: 50%;
   padding: 10px;
- /* height: 300px; /* Should be removed. Only for demonstration */
+
+}
+.en {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  background-color: var(--color-secondary-2-0);;
+
 }
 
 /* Clear floats after the columns */
-.row:after {
+.text:after {
   content: "";
   display: table;
   clear: both;
