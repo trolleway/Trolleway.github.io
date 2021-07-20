@@ -142,7 +142,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_respon
   float: left;
   width: 50%;
   padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
+ /* height: 300px; /* Should be removed. Only for demonstration */
 }
 
 /* Clear floats after the columns */
