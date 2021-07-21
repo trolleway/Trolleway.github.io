@@ -167,3 +167,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_respon
     width: 100%;
   }
 }
+
+.text_timetable {
+	font-family: monospace;
+}
