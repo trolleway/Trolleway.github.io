@@ -55,7 +55,7 @@ var tms_mapguide = L.tileLayer('https://trolleway.nextgis.com/api/component/rend
 	    
 // GPS BUTTON
 	    
-L.easyButton('fa-globe', function(btn, map){
+L.easyButton('<img src="gps.svg">', function(btn, map){
 mymap.locate({setView: true, maxZoom: 15});
 }).addTo(mymap);	    
 	    
