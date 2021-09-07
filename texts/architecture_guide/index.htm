@@ -12,11 +12,11 @@ body {
     padding: 0;
     margin: 0;
 }
-html, body, #map {
+html, body, #mapшв {
     height: 100%;
     width: 100vw;
 }
-           #mapid { height: 180px; }
+
            </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -31,6 +31,18 @@ var mymap = L.map('mapid').setView([55.666, 37.666], 10);
 		maxZoom: 18,
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, '			,
 	}).addTo(mymap);
+	    
+function onLocationFound(e) {
+    var radius = e.accuracy;
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(map);
+}
+mymap.locate({setView: true, maxZoom: 16});
+//mymap.on('locationfound', onLocationFound);	    
+	    
     </script>
   </body>
 </html>
