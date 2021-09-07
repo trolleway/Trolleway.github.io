@@ -2,6 +2,10 @@
   <head>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+//l.easybutton https://github.com/CliffCloud/Leaflet.EasyButton
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+	  
     <title>trolleway architecture guide</title>
     <meta name="description" content="Map of architecture landmarks collected by trolleway">
 	  	<meta charset="utf-8" />
@@ -48,6 +52,12 @@ mymap.locate({setView: true, maxZoom: 5});
 var tms_mapguide = L.tileLayer('https://trolleway.nextgis.com/api/component/render/tile?resource=62&x={x}&y={y}&z={z}', {
     tms: false
 }).addTo(mymap);
+	    
+// GPS BUTTON
+	    
+L.easyButton('fa-globe', function(btn, map){
+mymap.locate({setView: true, maxZoom: 15});
+}).addTo(mymap);	    
 	    
     </script>
   </body>
