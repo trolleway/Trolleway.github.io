@@ -6,7 +6,9 @@
   --color-secondary-2-0: #AA6539;
 }
 
-body { background-color: var(--color-primary-1); }
+body { 
+	background-color: var(--color-primary-1); 
+	margin: 0;}
 
 .photo {
   max-width: 100%;
