@@ -53,6 +53,10 @@ var tms_mapguide = L.tileLayer('https://trolleway.nextgis.com/api/component/rend
     tms: false
 }).addTo(mymap);
 	    
+var tms_trolleway_landcover = L.tileLayer('https://trolleway.nextgis.com/api/component/render/tile?resource=4907&x={x}&y={y}&z={z}', {
+    tms: false
+}).addTo(mymap);	    
+	    
 // GPS BUTTON
 	    
 L.easyButton('<img src="gps.svg">', function(btn, map){
