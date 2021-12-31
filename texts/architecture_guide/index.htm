@@ -29,16 +29,24 @@ html, body, #mapid {
     <div id="mapid"></div>
     <script>
     
-var mymap = L.map('mapid').setView([55.666, 37.666], 5);
+ 
+var basemaps = {
+  
+  'OpenStreetMap': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {'attribution': 'Map data &copy; OpenStreetMap contributors'  }),
+  'Empty': L.tileLayer(''),	
+};
 
-	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, '			,
-	}).addTo(mymap);
-	L.tileLayer('', {
-		maxZoom: 18,
-		attribution: 'basemap blank'			,
-	}).addTo(mymap);	    
+var mymap = L.map('mapid', {
+  'center': [55.666, 37.666],
+  'zoom': 5,
+  'layers': [
+    basemaps.OpenStreetMap
+  ]
+});
+
+var control = L.control.layers(basemaps).addTo(map);	    
+	    
+	    
 function onLocationFound(e) {
     var radius = e.accuracy;
 
