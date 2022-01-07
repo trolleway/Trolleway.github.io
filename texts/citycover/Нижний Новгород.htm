@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<!-- l.easybutton https://github.com/CliffCloud/Leaflet.EasyButton -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+	  
+    <title>citycover</title>
+    <meta name="description" content="Map of architecture landmarks collected by trolleway">
+	  	<meta charset="utf-8" />
+
+	  
+    <style>
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #mapid {
+    height: 100%;
+    width: 100vw;
+}
+
+           </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  </head>
+  <body>
+    <div id="mapid"></div>
+    <script>
+    
+ 
+var basemaps = {
+  
+  'OpenStreetMap': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {'attribution': 'Map data &copy; OpenStreetMap contributors'  }),
+  'Empty': L.tileLayer(''),	
+};
+
+var mymap = L.map('mapid', {
+  'center': [56.3036, 43.9832],
+  'zoom': 13,
+  'layers': [
+    basemaps.Empty
+  ]
+});
+
+//var control = L.control.layers(basemaps).addTo(mymap);	    
+	    
+	    
+function onLocationFound(e) {
+    var radius = e.accuracy;
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(mymap);
+}
+mymap.locate({setView: true, maxZoom: 5});
+//mymap.on('locationfound', onLocationFound);	 
+	    
+// LAYERS
+	  
+
+	    
+var tms_trolleway_landcover = L.tileLayer('https://trolleway.nextgis.com/api/component/render/tile?resource=4907&x={x}&y={y}&z={z}', {
+    tms: false
+}).addTo(mymap);	    
+	    
+// GPS BUTTON
+	    
+L.easyButton('<img src="gps.svg">', function(btn, map){
+mymap.locate({setView: true, maxZoom: 15});
+}).addTo(mymap);	    
+	    
+    </script>
+  </body>
+</html>
