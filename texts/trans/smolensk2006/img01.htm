@@ -2,17 +2,23 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<!-- mapnik -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<!-- fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prosto+One&display=swap" rel="stylesheet">
 <style>
 .bgimg-1 {
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/be/Smolensk_tram_71-605_20060817_269.jpg");
   height: 100%;
-}
+} 
+/*font-family: 'Prosto One', cursive; */
 body, html {
   height: 100%;
   margin: 0;
-  font: 400 15px/1.8 "Lato", sans-serif;
+  font: 200 15px/1.8 "Prosto One", cursive;;
   color: #777;
 }
 
@@ -28,7 +34,8 @@ body, html {
 .caption {
   position: absolute;
   left: 0;
-  top: 90%;
+  /*top: 90%;*/
+   bottom: 0;
   width: 100%;
   text-align: center;
   color: #000;
@@ -37,9 +44,18 @@ body, html {
 .caption span.border {
   background-color: #111;
   color: #fff;
+  opacity: 0.6;
   padding: 18px;
   font-size: 25px;
   letter-spacing: 10px;
+}
+@media only screen and (max-width: 600px) {
+  .caption span.border {
+    opacity: 1;
+	font-size: 15px;
+	padding: inherit;
+	letter-spacing: inherit;
+  }
 }
 
 h3 {
