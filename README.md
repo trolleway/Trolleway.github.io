@@ -6,7 +6,7 @@
 
 [Железнодорожные туристические маршруты / Russian railway tourist routes](https://trolleway.github.io/texts/railway_waves/index.htm)
 
-
+[Мои полноэкранные фотографии / My photographs on full-screen](https://trolleway.github.io/texts/t/index.htm)
 
 # My repositories
 
