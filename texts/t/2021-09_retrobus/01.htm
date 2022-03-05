@@ -31,16 +31,24 @@
 
 
 <div class="bgimg-1">
-<div id="backwardlink"><a href="index.htm"><img src="../transparent.gif"></a></div>
-<div id="forwardlink"><a href="02.htm"><img src="../transparent.gif"><img class="right_arrow" src="../click here to go next.svg"></a></div>
+<div id="backwardlink"><a href="index.htm" rel="up" ><img src="../transparent.gif"></a></div>
+<div id="forwardlink"><a href="02.htm" rel="next" ><img src="../transparent.gif"><img class="right_arrow" src="../click here to go next.svg"></a></div>
   <div class="caption">
     <span class="border">
-	ЛАЗ-695Т на подвозке музея "<a href="https://automuseum.ru/">Автомобили Мира</a>" осенью 2021. Стоит у метро Площадь Ильича в Гжельском переулке.
+	ЛАЗ-695Т на подвозке музея "<a href="https://automuseum.ru/" rel="external">Автомобили Мира</a>" осенью 2021. Стоит у метро Площадь Ильича в Гжельском переулке.
 	</span><br>
   </div>
 </div>
 
 <div id="map" style="width: 100%; height: 400px;"></div>
+<div id="copyright">
+       <a rel="cc:attributionURL" property="dc:title">Photo</a> by
+       <a rel="dc:creator" href=""
+       property="cc:attributionName">Artem Svetlov</a> is licensed to the public under 
+       the <a rel="license"
+       href="https://creativecommons.org/licenses/by/4.0/">Creative
+       Commons Attribution 4.0 License</a>.
+</div>
 <script>
 	var photo_coord = [55.74769,37.67926]
 	var map = L.map('map').setView([55.75077,37.67561], 14);
