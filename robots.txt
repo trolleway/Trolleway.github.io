@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trolleway.github.io/sitemap.xml
