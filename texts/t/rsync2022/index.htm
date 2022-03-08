@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link rel="stylesheet" href="../../main.css">
+  <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- for flexbox-->
+  <!-- fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Podkova&display=swap" rel="stylesheet">
+<style>
+body {
+font-family: 'Podkova', serif;
+}
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119801939-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119801939-1');
+</script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(87742115, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/87742115" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- Content start -->
+  <title>Резервное копировани фотоколлекции в rsync</title>
+  <meta property="article:author" content="Артём Светлов"> <!--OpenGraph-->
+</head>
+<body>
+  
+  <!-- Top Navigation Menu -->
+<div class="topnav">
+  <a href="../" class="active">Up</a>
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+  
+  <h1>Как делать резервное копировани фотоархива в rsync</h1>
+  <!--<h2>Описание линии</h2>-->
+         
+                  <div class="text">
+  <div class="ru" >
+
+  <p>
+  Архивам ваших фотографий нужно резервное копирование. Если снимать транспорт, то фотографий получается много, у меня их почти 4Tb за 20 лет. 
+  Облачные сервисы столько места почему-то не дают, поэтому дешевле всего копировать фото на внешний диск, или на жёсткий диск подключаемый в док-станцию для HDD.
+  Просто копировать время от времени файлы - не годится именно для фотоархива, потому что в нём постоянно происходят изменения: 
+  файлы и каталоги перемещаются по дереву, проявляются RAW, добавляются координаты к фотографиям. 
+  </p>
+  <p>
+  Для таких данных хорошо подходит давно известная утилита rsync.
+  rsync вычисляет изменения файлов и каталогов, и копирует только изменёные файлы. При переносе он загружает файл в новое место, и удаляет из старого.
+  </p>
+  <h2>Установка rsync в Windows</h2>
+rsync устанавливается через пакетный менеджер chocolately<br/>
+<code>cmd - Run as Administrator</code><br/>
+
+<code>choco install rsync</code>
+
+<h2>Запуск rsync на Windows</h2>
+
+<b><code>
+rsync --archive --verbose --progress --delete --partial --chmod=ugo=rwX --dry-run /cygdrive/d/PhotosMain/ /cygdrive/e/photos_backup_2002
+</code></b><br/><br/>
+
+Название диска E:\ заменяется на /cygdrive/e  (взято с https://stackoverflow.com/questions/51536762/rsync-does-not-recognize-windows-path) </br>
+В пути исходного каталога нужен закрывающий слеш.
+<img src="rsync.png">
+<h2>Ключи запуска rsynс</h2>
+
+<ul>
+<li>--archive архивный режим. Рекурсивный + обрабатывает все служебные файлы и параметры
+<li>--dry-run 
+<li>--progress 
+<li>--partial - с докачкой
+<li>--delete  - синхронизация с удалением. По умолчанию rsync не удаляет
+<li>--chmod=ugo=rwX - какая-то магия для нормальных прав на файлы в Windows
+</ul>
+
+
+<h3>Тесты алгоритма работы синхронизации файлов</h3>
+<ul>
+<li>При переименовывании файла - переименовывается
+<li>При переносе файла по дереву - переносится или копируется-удаляется
+<li>При переносе нескольких файлов - обрабатывается несколько файлов
+<li>При переносе каталога - переносится или копируется+удаляется
+<li>При изменении EXIF - перезаписывается
+<li>Время создания файла остаётся как в exif
+</ul>
+  
+  </div>
+  <div class="en" >
+Use rsync for backup of photo archive
+  </div>
+</div>
+            
+<div id="copyright">
+       <a rel="cc:attributionURL" property="dc:title">Page and images</a> by
+       <a rel="dc:creator" href=""
+       property="cc:attributionName">Artem Svetlov</a> is licensed to the public under 
+       the <a rel="license"
+       href="https://creativecommons.org/licenses/by/4.0/">Creative
+       Commons Attribution 4.0 License</a>.
+</div>  
+</body>
+  
+</html>  
