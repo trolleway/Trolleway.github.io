@@ -14,7 +14,15 @@ body {
   max-width: 100%;
   height: auto;
 }
+.fullwidth img{
+  max-width: 100%;
+  width:100%
+}
 
+.fullwidth img{
+  max-width: 100%;
+  height: auto;
+}
 
 figure img {
   max-width: 100%;
