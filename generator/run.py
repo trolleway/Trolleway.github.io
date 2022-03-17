@@ -3,8 +3,9 @@
 
 import json
 import os
+import urllib.request
 
-
+import pathlib
 
 def numfill(value):
     return str(value).zfill(2)
@@ -67,6 +68,10 @@ def  template_remove_map(template):
     
 json_dir = 'content'
 output_directory = os.path.join(os.getcwd(), ".."+os.sep,'texts','t')
+exif_cache_directory = os.path.join(os.getcwd(), 'exif_cache')
+if not os.path.isdir(exif_cache_directory):
+    os.mkdir(exif_cache_directory)
+
 assert os.path.isdir(json_dir),'must exists directory "'+json_dir+'"'
 
 json_files = [f for f in os.listdir(json_dir) if os.path.isfile(os.path.join(json_dir, f)) and f.lower().endswith('.json')]
@@ -112,9 +117,26 @@ for json_filename in json_files:
             right_frist_image = '''<img class="right_arrow" src="../click here to go next.svg">'''
         else:
             right_frist_image = ''
+            
+        photo_coord = None
+        photo_coord_osmorg = image.get('coord') or None
+        print(photo_coord_osmorg)
+        if photo_coord_osmorg is not None:
+            photo_coord = photo_coord_osmorg.split('/')[0]+','+photo_coord_osmorg.split('/')[1]
         
+        # coord from exif
+        photo_filename = pathlib.Path(image['url']).name
+        photo_local_cache = os.path.join(exif_cache_directory,photo_filename)
+        if not os.path.exists(photo_local_cache):
+            urllib.request.urlretrieve(image['url'], photo_local_cache)
+            
+        
+        if photo_coord is not None:
+            print(photo_coord)
+        else:
+            photo_coord='0,0'
         map_js = '''
-    var photo_coord = [55.666,37.666]
+    var photo_coord = ['''+photo_coord+''']
 	var map = L.map('map').setView(['''+data['map_center']+'''], '''+data['map_zoom']+''');
 	var OpenStreetMap_DE = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 		maxZoom: 18,
