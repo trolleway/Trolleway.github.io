@@ -5,11 +5,17 @@ import json
 import os
 import urllib.request
 
+from exif import Image
+
 import pathlib
 
 def numfill(value):
     return str(value).zfill(2)
 
+def dms_to_dd(d, m, s):
+    dd = d + float(m)/60 + float(s)/3600
+    return dd
+    
 def  template_remove_map(template):
     txt = '''
     
@@ -120,7 +126,7 @@ for json_filename in json_files:
             
         photo_coord = None
         photo_coord_osmorg = image.get('coord') or None
-        print(photo_coord_osmorg)
+
         if photo_coord_osmorg is not None:
             photo_coord = photo_coord_osmorg.split('/')[0]+','+photo_coord_osmorg.split('/')[1]
         
@@ -132,9 +138,22 @@ for json_filename in json_files:
             
         
         if photo_coord is not None:
-            print(photo_coord)
+            print('coordinates found in json '+photo_coord)
         else:
             photo_coord='0,0'
+            #get photo coordinate from exif
+            #TODO: simplify, code taken from already exist script https://github.com/trolleway/photos2map/blob/master/photos2geojson.py
+            with open(photo_local_cache, 'rb') as image_file:
+                image_exif = Image(image_file)
+                lat_dms=image_exif.gps_latitude
+                lat=dms_to_dd(lat_dms[0],lat_dms[1],lat_dms[2])
+                lon_dms=image_exif.gps_longitude
+                lon=dms_to_dd(lon_dms[0],lon_dms[1],lon_dms[2])
+
+                photo_coord=str(lat)+','+str(lon)
+                
+                print('coordinates obtained from EXIF data of image '+photo_coord)   
+                    
         map_js = '''
     var photo_coord = ['''+photo_coord+''']
 	var map = L.map('map').setView(['''+data['map_center']+'''], '''+data['map_zoom']+''');
