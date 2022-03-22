@@ -92,7 +92,6 @@ for json_filename in json_files:
     output_directory_name = os.path.splitext(json_filename)[0]
     output_directory_path = os.path.join(output_directory,output_directory_name)
 
-    
     assert os.path.isdir(output_directory_path), 'must exist directory '+output_directory_path
     
     template_filepath = 'gallery.template.htm'
@@ -169,7 +168,30 @@ for json_filename in json_files:
 		radius: 200
 	}).addTo(map).bindPopup('Гиперссылка на картографический сервис');
         '''
-        
+        google_counter = """<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119801939-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119801939-1');
+</script>"""
+        yandex_counter = '''<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(87742115, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/87742115" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->'''
+
         html = str()
         
         template = template_remove_map(template)
@@ -184,31 +206,34 @@ for json_filename in json_files:
         rel_right = rel_right,
         map_js = map_js,
         right_frist_image = right_frist_image,
-        google_counter = '''<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119801939-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-119801939-1');
-</script>''',
-        yandex_counter = '''<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-   ym(87742115, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/87742115" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->''',
+        google_counter=google_counter,
+        yandex_counter=yandex_counter
         )
         
         filename = os.path.join(output_directory_path,numfill(current_image))+'.htm'
         with open(filename, "w", encoding='utf-8') as text_file:
             text_file.write(html)
+
+    # index page
+    with open('gallery.index.template.htm', encoding='utf-8') as template_file:
+        template = template_file.read()
+        
+    if 'text_en' in data:
+        content_en = '<div class="en" >'+data['text_en']+'</div>'+"\n"
+    else:
+        content_en = "\n"
+    html = template.format(
+        title = data['title'],
+        text = data['text'],
+        content_en = content_en,
+        h1 = data['h1'],
+        google_counter=google_counter,
+        yandex_counter=yandex_counter
+        )
+        
+    html = html.replace('<!--google_counter-->',google_counter)
+    html = html.replace('<!--yandex_counter-->',yandex_counter)
+    filename = os.path.join(output_directory_path,'index.htm')
+    
+    with open(filename, "w", encoding='utf-8') as text_file:
+        text_file.write(html)
