@@ -8,6 +8,7 @@ import urllib.request
 from exif import Image
 
 import pathlib
+from datetime import datetime
 
 def numfill(value):
     return str(value).zfill(2)
@@ -73,6 +74,11 @@ def  template_remove_map(template):
     
     
 json_dir = 'content'
+sitemap_base_url = 'https://trolleway.github.io/texts/t/'
+sitemap_path_manual = os.path.join(os.getcwd(), ".."+os.sep,'sitemap_manual.xml')
+sitemap_path = os.path.join(os.getcwd(), ".."+os.sep,'sitemap.xml')
+pages2sitemap=[]
+
 output_directory = os.path.join(os.getcwd(), ".."+os.sep,'texts','t')
 exif_cache_directory = os.path.join(os.getcwd(), 'exif_cache')
 if not os.path.isdir(exif_cache_directory):
@@ -87,6 +93,10 @@ for json_filename in json_files:
     with open(os.path.join(json_dir,json_filename), encoding='utf-8') as json_file:
         data = json.load(json_file)
     assert data is not None
+    if 'date_mod' in data:
+        GALLERY_DATE_MOD = data['date_mod']
+    else:
+        GALLERY_DATE_MOD = datetime.today().strftime('%Y-%m-%d')
     
     # target directory
     output_directory_name = os.path.splitext(json_filename)[0]
@@ -214,6 +224,9 @@ for json_filename in json_files:
         with open(filename, "w", encoding='utf-8') as text_file:
             text_file.write(html)
 
+        pages2sitemap.append({'loc':sitemap_base_url+output_directory_name+'/'+numfill(current_image)+'.htm','priority':'0.4','lastmod':GALLERY_DATE_MOD})
+    pages2sitemap.append({'loc':sitemap_base_url+output_directory_name+'/'+'index.htm','priority':'0.6','lastmod':GALLERY_DATE_MOD})
+    
     # index page
     with open('gallery.index.template.htm', encoding='utf-8') as template_file:
         template = template_file.read()
@@ -237,3 +250,15 @@ for json_filename in json_files:
     
     with open(filename, "w", encoding='utf-8') as text_file:
         text_file.write(html)
+        
+#sitemap
+with open(sitemap_path_manual, encoding='utf-8') as sitemap_manual:
+        sitemap_template = sitemap_manual.read()
+        
+        
+with open(sitemap_path, "w", encoding='utf-8') as text_file:
+    out = ''
+    for page in pages2sitemap:
+        out += "<url><loc>{url}</loc><lastmod>{lastmod}</lastmod><priority>{priority}</priority></url>\n".format(url=page['loc'],priority=page['priority'],lastmod=page['lastmod'])
+        
+    text_file.write(sitemap_template.replace('<!--GENERATED SITEMAP CONTENT FROM PYTHON-->',out))
