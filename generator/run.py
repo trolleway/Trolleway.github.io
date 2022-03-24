@@ -16,10 +16,10 @@ def numfill(value):
 def dms_to_dd(d, m, s):
     dd = d + float(m)/60 + float(s)/3600
     return dd
-    
+
 def  template_remove_map(template):
     txt = '''
-    
+
     <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +33,7 @@ def  template_remove_map(template):
 <link href="https://fonts.googleapis.com/css2?family=Prosto+One&display=swap" rel="stylesheet">
 <link href="../newsincerity.css" rel="stylesheet">
 <style>
-.bgimg-1 {bgimg} 
+.bgimg-1 {bgimg}
 
 </style>
 </head>
@@ -54,7 +54,7 @@ def  template_remove_map(template):
 <div id="copyright">
        <a rel="cc:attributionURL" property="dc:title">Photo</a> by
        <a rel="dc:creator" href=""
-       property="cc:attributionName">Artem Svetlov</a> is licensed to the public under 
+       property="cc:attributionName">Artem Svetlov</a> is licensed to the public under
        the <a rel="license"
        href="https://creativecommons.org/licenses/by/4.0/">Creative
        Commons Attribution 4.0 License</a>.
@@ -68,11 +68,11 @@ def  template_remove_map(template):
 </body>
 </html>
 
-    
+
     '''
     return txt
-    
-    
+
+
 json_dir = 'content'
 sitemap_base_url = 'https://trolleway.github.io/texts/t/'
 sitemap_path_manual = os.path.join(os.getcwd(), ".."+os.sep,'sitemap_manual.xml')
@@ -97,24 +97,24 @@ for json_filename in json_files:
         GALLERY_DATE_MOD = data['date_mod']
     else:
         GALLERY_DATE_MOD = datetime.today().strftime('%Y-%m-%d')
-    
+
     # target directory
     output_directory_name = os.path.splitext(json_filename)[0]
     output_directory_path = os.path.join(output_directory,output_directory_name)
 
     assert os.path.isdir(output_directory_path), 'must exist directory '+output_directory_path
-    
+
     template_filepath = 'gallery.template.htm'
     with open(template_filepath, encoding='utf-8') as template_file:
         template = template_file.read()
     assert '{image_url}' in template
-    
+
     count_images = len(data['images'])
     current_image = 0
-    
+
     for image in data['images']:
         current_image += 1
-        
+
         if current_image < count_images:
             url_right = numfill(current_image+1)+'.htm'
             rel_right = 'next'
@@ -127,42 +127,48 @@ for json_filename in json_files:
         else:
             url_left = 'index.htm'
             rel_left = 'up'
-        
+
         if current_image == 1:
             right_frist_image = '''<img class="right_arrow" src="../click here to go next.svg">'''
         else:
             right_frist_image = ''
-            
+
         photo_coord = None
         photo_coord_osmorg = image.get('coord') or None
 
         if photo_coord_osmorg is not None:
             photo_coord = photo_coord_osmorg.split('/')[0]+','+photo_coord_osmorg.split('/')[1]
-        
+
         # coord from exif
         photo_filename = pathlib.Path(image['url']).name
         photo_local_cache = os.path.join(exif_cache_directory,photo_filename)
         if not os.path.exists(photo_local_cache):
-            urllib.request.urlretrieve(image['url'], photo_local_cache)
-            
-        
+            try:
+                urllib.request.urlretrieve(image['url'], photo_local_cache)
+            except:
+                print('cant download '+image['url'])
+
         if photo_coord is not None:
             print('coordinates found in json '+photo_coord)
         else:
             photo_coord='0,0'
             #get photo coordinate from exif
             #TODO: simplify, code taken from already exist script https://github.com/trolleway/photos2map/blob/master/photos2geojson.py
-            with open(photo_local_cache, 'rb') as image_file:
-                image_exif = Image(image_file)
-                lat_dms=image_exif.gps_latitude
-                lat=dms_to_dd(lat_dms[0],lat_dms[1],lat_dms[2])
-                lon_dms=image_exif.gps_longitude
-                lon=dms_to_dd(lon_dms[0],lon_dms[1],lon_dms[2])
+            try:
+                with open(photo_local_cache, 'rb') as image_file:
+                    image_exif = Image(image_file)
+                    lat_dms=image_exif.gps_latitude
+                    lat=dms_to_dd(lat_dms[0],lat_dms[1],lat_dms[2])
+                    lon_dms=image_exif.gps_longitude
+                    lon=dms_to_dd(lon_dms[0],lon_dms[1],lon_dms[2])
 
-                photo_coord=str(lat)+','+str(lon)
-                
-                print('coordinates obtained from EXIF data of image '+photo_coord)   
-                    
+                    photo_coord=str(lat)+','+str(lon)
+
+                    print('coordinates obtained from EXIF data of image '+photo_coord)
+            except:
+                photo_coord='0,0'
+                lat='0'
+                lon='0'
         map_js = '''
     var photo_coord = ['''+photo_coord+''']
 	var map = L.map('map').setView(['''+data['map_center']+'''], '''+data['map_zoom']+''');
@@ -203,10 +209,10 @@ for json_filename in json_files:
 <!-- /Yandex.Metrika counter -->'''
 
         html = str()
-        
+
         template = template_remove_map(template)
-        
-        
+
+
         html = template.format(
         bgimg = '{  background-image: url("'+image['url']+'");  height: 100%;} ',
         caption = image['text'],
@@ -219,18 +225,18 @@ for json_filename in json_files:
         google_counter=google_counter,
         yandex_counter=yandex_counter
         )
-        
+
         filename = os.path.join(output_directory_path,numfill(current_image))+'.htm'
         with open(filename, "w", encoding='utf-8') as text_file:
             text_file.write(html)
 
         pages2sitemap.append({'loc':sitemap_base_url+output_directory_name+'/'+numfill(current_image)+'.htm','priority':'0.4','lastmod':GALLERY_DATE_MOD})
     pages2sitemap.append({'loc':sitemap_base_url+output_directory_name+'/'+'index.htm','priority':'0.6','lastmod':GALLERY_DATE_MOD})
-    
+
     # index page
     with open('gallery.index.template.htm', encoding='utf-8') as template_file:
         template = template_file.read()
-        
+
     if 'text_en' in data:
         content_en = '<div class="en" >'+data['text_en']+'</div>'+"\n"
     else:
@@ -243,22 +249,22 @@ for json_filename in json_files:
         google_counter=google_counter,
         yandex_counter=yandex_counter
         )
-        
+
     html = html.replace('<!--google_counter-->',google_counter)
     html = html.replace('<!--yandex_counter-->',yandex_counter)
     filename = os.path.join(output_directory_path,'index.htm')
-    
+
     with open(filename, "w", encoding='utf-8') as text_file:
         text_file.write(html)
-        
+
 #sitemap
 with open(sitemap_path_manual, encoding='utf-8') as sitemap_manual:
         sitemap_template = sitemap_manual.read()
-        
-        
+
+
 with open(sitemap_path, "w", encoding='utf-8') as text_file:
     out = ''
     for page in pages2sitemap:
         out += "<url><loc>{url}</loc><lastmod>{lastmod}</lastmod><priority>{priority}</priority></url>\n".format(url=page['loc'],priority=page['priority'],lastmod=page['lastmod'])
-        
+
     text_file.write(sitemap_template.replace('<!--GENERATED SITEMAP CONTENT FROM PYTHON-->',out))
