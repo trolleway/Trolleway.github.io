@@ -169,9 +169,13 @@ for json_filename in json_files:
                 photo_coord='0,0'
                 lat='0'
                 lon='0'
+        
+        map_center = data['map_center']
+        if str(image.get('center_map'))=='1':
+            map_center = photo_coord
         map_js = '''
     var photo_coord = ['''+photo_coord+''']
-	var map = L.map('map').setView(['''+data['map_center']+'''], '''+data['map_zoom']+''');
+	var map = L.map('map').setView(['''+map_center+'''], '''+data['map_zoom']+''');
 	var OpenStreetMap_DE = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 		maxZoom: 18,
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
