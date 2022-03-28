@@ -91,7 +91,14 @@ assert len(json_files)>0,'must be find some .json files in '+json_dir
 
 for json_filename in json_files:
     with open(os.path.join(json_dir,json_filename), encoding='utf-8') as json_file:
-        data = json.load(json_file)
+        try:
+            data = json.load(json_file)
+        except Exception as e:
+
+            print('error open json '+os.path.join(json_dir,json_filename))
+            print(e)
+            print()
+            continue
     assert data is not None
     if 'date_mod' in data:
         GALLERY_DATE_MOD = data['date_mod']
@@ -169,7 +176,7 @@ for json_filename in json_files:
                 photo_coord='0,0'
                 lat='0'
                 lon='0'
-        
+
         map_center = data['map_center']
         if str(image.get('center_map'))=='1':
             map_center = photo_coord
