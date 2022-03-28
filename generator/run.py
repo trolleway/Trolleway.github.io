@@ -138,7 +138,7 @@ for json_filename in json_files:
         if current_image == 1:
             right_frist_image = '''<img class="right_arrow" src="../click here to go next.svg">'''
         else:
-            right_frist_image = ''
+            right_frist_image = '''<img class="right_arrow" width="300px" height="300px" src="../transparent.gif">'''
 
         photo_coord = None
         photo_coord_osmorg = image.get('coord') or None
