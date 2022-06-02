@@ -9,37 +9,37 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prosto+One&display=swap" rel="stylesheet">
-<link href="../newsincerity.css" rel="stylesheet">
-<style>
-.bgimg-1 {
-  background-image: url("{image_url}");
-  height: 100%;
-} 
+<link href="../newsincerity_semantic.css" rel="stylesheet">
 
-</style>
 </head>
 <body>
 <div itemscope itemtype="https://schema.org/Photograph">
 
-<div class="bgimg-1">
-<div id="backwardlink"><a href="{url_left}" rel="{rel_left}" ><img src="../transparent.gif"></a></div>
-<div id="forwardlink"><a href="{url_right}" rel="{rel_right}" ><img src="../transparent.gif">{right_frist_image}<img class="right_arrow" src="../click here to go next.svg"></a></a></div>
-  <div class="caption">
+<div class="stack">
+<figure class="stack__element">
+    <div id="backwardlink"><a href="{url_left}" rel="{rel_left}" ><img src="../transparent.gif"></a></div>
+    <div id="forwardlink"><a href="{url_right}" rel="{rel_right}" ><img src="../transparent.gif">{right_frist_image}</a></div>
+<img class="stack__element" src='{image_url}'>
+
+  <figcaption class="caption">
     <span class="border"  itemprop="description">
 	{caption}
-	</span><br>
-  </div>
-</div>
-
-<footer>
-<div id="map" style="width: 100%; height: 400px;"></div>
-<!-- metadata schema.org -->
-
-<meta itemprop="image" content="{image_url}" />
-  <div itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates">
+	</span>
+  <br>
+	<meta itemprop="image" content="{image_url}" />
+	<div itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates">
     <meta itemprop="latitude" content="{lat}" />
     <meta itemprop="longitude" content="{lon}" />
   </div>
+  </figcaption>
+  </figure>
+</div>
+
+
+<div id="map" style="width: 100%; height: 400px;"></div>
+<!-- metadata schema.org -->
+
+
 <div id="copyright">
        <a rel="cc:attributionURL" property="dc:title">Photo</a> by
        <a rel="dc:creator" href=""
@@ -51,20 +51,9 @@
 </div> <!-- end main itemscope-->
 <!-- / metadata -->
 <!-- generator map start-->
+<footer>
 <script>
-	var photo_coord = [{lat},{lon}]
-	var map = L.map('map').setView([{map_center}], {map_zoom});
-	var OpenStreetMap_DE = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
-		maxZoom: 18,
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-	});
-	var tiles = OpenStreetMap_DE.addTo(map);
-	var circle = L.circle(photo_coord, {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5,
-		radius: 200
-	}).addTo(map).bindPopup('Гиперссылка на картографический сервис');
+
 {google_counter}
 {yandex_counter}
 </footer>
