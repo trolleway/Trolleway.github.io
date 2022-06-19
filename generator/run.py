@@ -82,26 +82,26 @@ class Website_generator():
 
     def generate(self,mode=None):
     
-        self.logger.info('info')
-
         assert mode in ('standalone-full',None,'')
         
-        
-        json_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),'content')
+        basedir = (os.path.dirname(os.path.realpath(__file__)))
+        json_dir = os.path.join(basedir,'content')
         
         if mode is None:
             sitemap_base_url = 'https://trolleway.github.io/texts/t/'
         if mode == 'standalone-full':
             sitemap_base_url = 'https://trolleway.com/texts/'
             
-        sitemap_path_manual = os.path.join(os.getcwd(), ".."+os.sep,'sitemap_manual.xml')
-        sitemap_path = os.path.join(os.getcwd(), ".."+os.sep,'sitemap.xml')
+        sitemap_path_manual = os.path.join( 'sitemap_manual.xml') #, ".."+os.sep
+        sitemap_path = os.path.join(os.getcwd(),'sitemap.xml')
+        assert os.path.isfile(sitemap_path_manual),'not found file '+sitemap_path_manual
+        #assert os.path.isfile(sitemap_path)
         pages2sitemap=[]
 
         if mode is None:
             output_directory = os.path.join(os.getcwd(), ".."+os.sep,'texts','t')
         if mode == 'standalone-full':
-            output_directory = os.path.join(os.getcwd(), ".."+os.sep,'texts-standalone-full')
+            output_directory = os.path.join(basedir,'out4standalone')
             if not os.path.isdir(output_directory): os.makedirs(output_directory)
             
             
@@ -136,14 +136,20 @@ class Website_generator():
             output_directory_name = os.path.splitext(json_filename)[0]
             output_directory_path = os.path.join(output_directory,output_directory_name)
             
-            if not os.path.isdir(output_directory_path): os.makedirs(output_directory_path)
+            if not os.path.isdir(output_directory_path): 
+                self.logger.debug('create '+output_directory_path)
+                os.makedirs(output_directory_path)
 
             assert os.path.isdir(output_directory_path), 'must exist directory '+output_directory_path
 
-            template_filepath = 'gallery.template.htm'
+            template_filepath = os.path.join(basedir, 'gallery.template.htm')
+            assert os.path.exists(template_filepath), 'must exist file '+template_filepath
             with open(template_filepath, encoding='utf-8') as template_file:
                 template = template_file.read()
             assert '{image_url}' in template
+
+            template_index_filepath = os.path.join(basedir, 'gallery.index.template.htm')
+            assert os.path.exists(template_index_filepath), 'must exist file '+template_index_filepath            
 
             count_images = len(data['images'])
             current_image = 0
@@ -274,7 +280,7 @@ class Website_generator():
                 
                 html = str()
                 #template = self.template_remove_map(template)
-                with open('gallery.template.htm', encoding='utf-8') as template_file:
+                with open(template_filepath, encoding='utf-8') as template_file:
                     template = template_file.read()
                 html = template.format(
                 image_url = image['url'],
@@ -298,7 +304,7 @@ class Website_generator():
             pages2sitemap.append({'loc':sitemap_base_url+output_directory_name+'/'+'index.htm','priority':'0.6','lastmod':GALLERY_DATE_MOD})
 
             # index page
-            with open('gallery.index.template.htm', encoding='utf-8') as template_file:
+            with open(template_index_filepath, encoding='utf-8') as template_file:
                 template = template_file.read()
 
             if 'text_en' in data:
@@ -322,6 +328,7 @@ class Website_generator():
                 text_file.write(html)
 
         #sitemap
+
         with open(sitemap_path_manual, encoding='utf-8') as sitemap_manual:
                 sitemap_template = sitemap_manual.read()
 
