@@ -182,9 +182,16 @@ class Website_generator():
                     rel_left = 'up'
 
                 if current_image == 1:
-                    right_frist_image = '''<img class="left_arrow" src="../Controls_chapter_next.svg">'''
+                    right_link_image = '''<img class="left_arrow" src="../Controls_chapter_next.svg">'''
+                elif current_image == len(data['images']):
+                    right_link_image = '''<img class="right_arrow" src="../Controls_eject.svg">'''
                 else:
-                    right_frist_image = '''<img class="left_arrow" width="300px" height="300px" src="../transparent.gif"><img class="right_arrow" src="../Controls_chapter_next.svg">'''
+                    right_link_image = '''<img class="right_arrow" src="../Controls_chapter_next.svg">'''
+
+                if current_image == 1:
+                    left_link_image = '''<img class="left_arrow" src="../Controls_eject.svg">'''
+                else:
+                    left_link_image = '''<img class="right_arrow" src="../Controls_chapter_previous.svg">'''
 
 
                 # download photo from url to cache dir
@@ -303,7 +310,8 @@ class Website_generator():
                 rel_right = rel_right,
                 map_js = map_js,
                 lat=lat,lon=lon,
-                right_frist_image = right_frist_image,
+                right_link_image = right_link_image,
+                left_link_image = left_link_image,
                 google_counter=google_counter,
                 yandex_counter=yandex_counter
                 )
