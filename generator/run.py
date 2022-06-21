@@ -98,11 +98,20 @@ class Website_generator():
         #assert os.path.isfile(sitemap_path)
         pages2sitemap=[]
 
+        #---- set output directory for files
         if mode is None:
             output_directory = os.path.join(os.getcwd(), ".."+os.sep,'texts','t')
         if mode == 'standalone-full':
             output_directory = os.path.join(basedir,'out4standalone')
             if not os.path.isdir(output_directory): os.makedirs(output_directory)
+            
+        #---- copy static files
+        src = os.path.join(basedir,'static')
+        src_files = os.listdir(src)
+        for file_name in src_files:
+            full_file_name = os.path.join(src, file_name)
+            if os.path.isfile(full_file_name):
+                shutil.copy(full_file_name, output_directory)
             
             
         exif_cache_directory = os.path.join(os.getcwd(), 'exif_cache')
@@ -173,9 +182,9 @@ class Website_generator():
                     rel_left = 'up'
 
                 if current_image == 1:
-                    right_frist_image = '''<img class="right_arrow" src="../click here to go next.svg">'''
+                    right_frist_image = '''<img class="left_arrow" src="../Controls_chapter_next.svg">'''
                 else:
-                    right_frist_image = '''<img class="right_arrow" width="300px" height="300px" src="../transparent.gif">'''
+                    right_frist_image = '''<img class="left_arrow" width="300px" height="300px" src="../transparent.gif"><img class="right_arrow" src="../Controls_chapter_next.svg">'''
 
 
                 # download photo from url to cache dir
@@ -224,6 +233,9 @@ class Website_generator():
                             lon=self.dms_to_dd(lon_dms[0],lon_dms[1],lon_dms[2])
 
                             photo_coord=str(lat)+','+str(lon)
+                            
+                            lat = str(round(float(lat), 4))
+                            lon = str(round(float(lon), 4))
 
                             self.logger.debug('coordinates obtained from EXIF data of image '+photo_coord)
                     except:
