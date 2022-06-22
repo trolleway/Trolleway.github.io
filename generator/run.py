@@ -90,7 +90,7 @@ class Website_generator():
         if mode is None:
             sitemap_base_url = 'https://trolleway.github.io/texts/t/'
         if mode == 'standalone-full':
-            sitemap_base_url = 'https://trolleway.com/texts/'
+            sitemap_base_url = 'https://trolleway.com/reports/'
             
         sitemap_path_manual = os.path.join( 'sitemap_manual.xml') #, ".."+os.sep
         sitemap_path = os.path.join(os.getcwd(),'sitemap.xml')
@@ -102,7 +102,7 @@ class Website_generator():
         if mode is None:
             output_directory = os.path.join(os.getcwd(), ".."+os.sep,'texts','t')
         if mode == 'standalone-full':
-            output_directory = os.path.join(basedir,'out4standalone')
+            output_directory = os.path.join(basedir,'..','reports')
             if not os.path.isdir(output_directory): os.makedirs(output_directory)
             
         #---- copy static files
