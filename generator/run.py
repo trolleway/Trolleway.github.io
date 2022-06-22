@@ -182,16 +182,16 @@ class Website_generator():
                     rel_left = 'up'
 
                 if current_image == 1:
-                    right_link_image = '''<img class="left_arrow" src="../Controls_chapter_next.svg">'''
+                    right_link_image = '''<img class="left_arrow"   alt="Go to next page" src="../Controls_chapter_next.svg">'''
                 elif current_image == len(data['images']):
-                    right_link_image = '''<img class="right_arrow" src="../Controls_eject.svg">'''
+                    right_link_image = '''<img class="right_arrow"   alt="Go to index page" src="../Controls_eject.svg">'''
                 else:
-                    right_link_image = '''<img class="right_arrow" src="../Controls_chapter_next.svg">'''
+                    right_link_image = '''<img class="right_arrow"   alt="Go to next page" src="../Controls_chapter_next.svg">'''
 
                 if current_image == 1:
-                    left_link_image = '''<img class="left_arrow" src="../Controls_eject.svg">'''
+                    left_link_image = '''<img class="left_arrow"  alt="Go to index page" src="../Controls_eject.svg">'''
                 else:
-                    left_link_image = '''<img class="right_arrow" src="../Controls_chapter_previous.svg">'''
+                    left_link_image = '''<img class="right_arrow"   alt="Go to previous page" src="../Controls_chapter_previous.svg">'''
 
 
                 # download photo from url to cache dir
