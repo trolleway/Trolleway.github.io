@@ -13,7 +13,7 @@ from datetime import datetime
 
 class Website_generator():
 
-    
+
     logging.basicConfig(level=logging.DEBUG,format='%(asctime)s %(levelname)-8s %(message)s',datefmt='%Y-%m-%d %H:%M:%S')
     logger = logging.getLogger(__name__)
     def __init__(self):
@@ -81,17 +81,17 @@ class Website_generator():
 
 
     def generate(self,mode=None):
-    
+
         assert mode in ('standalone-full',None,'')
-        
+
         basedir = (os.path.dirname(os.path.realpath(__file__)))
         json_dir = os.path.join(basedir,'content')
-        
+
         if mode is None:
             sitemap_base_url = 'https://trolleway.github.io/texts/t/'
         if mode == 'standalone-full':
             sitemap_base_url = 'https://trolleway.com/reports/'
-            
+
         sitemap_path_manual = os.path.join( 'sitemap_manual.xml') #, ".."+os.sep
         sitemap_path = os.path.join(os.getcwd(),'sitemap.xml')
         assert os.path.isfile(sitemap_path_manual),'not found file '+sitemap_path_manual
@@ -104,7 +104,7 @@ class Website_generator():
         if mode == 'standalone-full':
             output_directory = os.path.join(basedir,'..','reports')
             if not os.path.isdir(output_directory): os.makedirs(output_directory)
-            
+
         #---- copy static files
         src = os.path.join(basedir,'static')
         src_files = os.listdir(src)
@@ -112,8 +112,8 @@ class Website_generator():
             full_file_name = os.path.join(src, file_name)
             if os.path.isfile(full_file_name):
                 shutil.copy(full_file_name, output_directory)
-            
-            
+
+
         exif_cache_directory = os.path.join(os.getcwd(), 'exif_cache')
         if not os.path.isdir(exif_cache_directory):
             os.mkdir(exif_cache_directory)
@@ -141,11 +141,11 @@ class Website_generator():
                 GALLERY_DATE_MOD = datetime.today().strftime('%Y-%m-%d')
 
             # target directory calc
-            
+
             output_directory_name = os.path.splitext(json_filename)[0]
             output_directory_path = os.path.join(output_directory,output_directory_name)
-            
-            if not os.path.isdir(output_directory_path): 
+
+            if not os.path.isdir(output_directory_path):
                 self.logger.debug('create '+output_directory_path)
                 os.makedirs(output_directory_path)
 
@@ -158,13 +158,13 @@ class Website_generator():
             assert '{image_url}' in template
 
             template_index_filepath = os.path.join(basedir, 'gallery.index.template.htm')
-            assert os.path.exists(template_index_filepath), 'must exist file '+template_index_filepath            
+            assert os.path.exists(template_index_filepath), 'must exist file '+template_index_filepath
 
             count_images = len(data['images'])
             current_image = 0
 
             #calculate filenames for prev/next link
-            
+
             for image in data['images']:
                 current_image += 1
 
@@ -195,7 +195,7 @@ class Website_generator():
 
 
                 # download photo from url to cache dir
-                
+
                 photo_filename = pathlib.Path(image['url']).name
                 photo_local_cache = os.path.join(exif_cache_directory,photo_filename)
                 if not os.path.exists(photo_local_cache):
@@ -203,9 +203,9 @@ class Website_generator():
                         urllib.request.urlretrieve(image['url'], photo_local_cache)
                     except:
                         print('cant download '+image['url'])
-                        
-                #copy photo to website dir 
-                
+
+                #copy photo to website dir
+
                 if mode == 'standalone-full':
                     photo_static_website_path = os.path.join(output_directory_path,photo_filename)
                     if not os.path.isfile(photo_static_website_path):
@@ -215,17 +215,17 @@ class Website_generator():
                         except:
                             self.logger.debug('copy error '+ photo_local_cache)
                     image['url'] = photo_filename
-                        
+
                 # get photo coordinates from json if exists
-                
+
                 photo_coord = None
                 photo_coord_osmorg = image.get('coord') or None
 
                 if photo_coord_osmorg is not None:
                     photo_coord = photo_coord_osmorg.split('/')[0]+','+photo_coord_osmorg.split('/')[1]
-                
+
                 # get coordinates from exif
-                
+
                 if photo_coord is not None:
                     print('coordinates found in json '+photo_coord)
                 else:
@@ -240,7 +240,7 @@ class Website_generator():
                             lon=self.dms_to_dd(lon_dms[0],lon_dms[1],lon_dms[2])
 
                             photo_coord=str(lat)+','+str(lon)
-                            
+
                             lat = str(round(float(lat), 4))
                             lon = str(round(float(lon), 4))
 
@@ -251,7 +251,7 @@ class Website_generator():
                         lon='0'
 
                 # print map
-                
+
                 map_center = data['map_center']
                 if str(image.get('center_map'))=='1':
                     map_center = photo_coord
@@ -270,7 +270,7 @@ class Website_generator():
                 radius: 200
             }).addTo(map).bindPopup('Гиперссылка на картографический сервис');
                 '''
-                google_counter = """<!-- Global site tag (gtag.js) - Google Analytics -->
+                google_counter_trolleway_github = """<!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119801939-1"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
@@ -279,7 +279,16 @@ class Website_generator():
 
           gtag('config', 'UA-119801939-1');
         </script>"""
-                yandex_counter = '''<!-- Yandex.Metrika counter -->
+                google_counter = '''<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3J5MD6L525"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3J5MD6L525');
+</script>'''
+                yandex_counter_trolleway_github_io = '''<!-- Yandex.Metrika counter -->
         <script type="text/javascript" >
            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
            m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
@@ -294,9 +303,26 @@ class Website_generator():
         <noscript><div><img src="https://mc.yandex.ru/watch/87742115" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
         <!-- /Yandex.Metrika counter -->'''
 
+                yandex_counter = '''
+                <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(55429573, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/55429573" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+                '''
+
 
                 #build html
-                
+
                 html = str()
                 #template = self.template_remove_map(template)
                 with open(template_filepath, encoding='utf-8') as template_file:
