@@ -195,8 +195,10 @@ class Website_generator():
 
 
                 # download photo from url to cache dir
-
-                photo_filename = pathlib.Path(image['url']).name
+                if 'url_hotlink' in image.keys():
+                    photo_filename = pathlib.Path(image['url_hotlink']).name
+                else:
+                    photo_filename = pathlib.Path(image['url']).name
                 photo_local_cache = os.path.join(exif_cache_directory,photo_filename)
                 if not os.path.exists(photo_local_cache):
                     try:
@@ -207,14 +209,17 @@ class Website_generator():
                 #copy photo to website dir
 
                 if mode == 'standalone-full':
-                    photo_static_website_path = os.path.join(output_directory_path,photo_filename)
-                    if not os.path.isfile(photo_static_website_path):
-                        self.logger.debug(photo_local_cache+' > '+photo_static_website_path)
-                        try:
-                            shutil.copyfile(photo_local_cache,photo_static_website_path)
-                        except:
-                            self.logger.debug('copy error '+ photo_local_cache)
-                    image['url'] = photo_filename
+                    if 'url_hotlink' not in image.keys():
+                        photo_static_website_path = os.path.join(output_directory_path,photo_filename)
+                        if not os.path.isfile(photo_static_website_path):
+                            self.logger.debug(photo_local_cache+' > '+photo_static_website_path)
+                            try:
+                                shutil.copyfile(photo_local_cache,photo_static_website_path)
+                            except:
+                                self.logger.debug('copy error '+ photo_local_cache)
+                        image['url'] = photo_filename
+                    elif 'url_hotlink' in image.keys():
+                        image['url'] = image['url_hotlink']
 
                 # get photo coordinates from json if exists
 
