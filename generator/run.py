@@ -10,6 +10,7 @@ import shutil,logging
 
 import pathlib
 from datetime import datetime
+import piexif
 
 class Website_generator():
 
@@ -79,7 +80,39 @@ class Website_generator():
         '''
         return txt
 
-
+    def json_from_dir(self,path,base_url=''):
+        self.logger.debug(path)
+        assert os.path.isdir(path)
+        
+        record_template = '''    { "url": "{url}",
+      "text": "{text}"
+    },'''
+        for (root,dirs,files) in os.walk(path):
+            print(os.path.dirname(root))
+            for filename in files:
+                temp_path = os.path.normpath(path)
+                path_as_list = temp_path.split(os.sep)
+                
+                url = base_url + '/' + os.path.join(path_as_list[-2],path_as_list[-1]) + '/' + filename
+                print(url)
+                '''
+                exif_dict = piexif.load(os.path.join(root,filename))
+                for ifd in ("0th", "Exif", "GPS", "1st"):
+                    for tag in exif_dict[ifd]:
+                        print(ifd,tag,piexif.TAGS[ifd][tag]["name"], exif_dict[ifd][tag])
+                description = exif_dict['0th'].get(270,'')
+                print('d: ',description)
+                '''
+                from iptcinfo3 import IPTCInfo
+                info = IPTCInfo(os.path.join(root,filename), force=True)
+                print(info['city'])
+                if info['city'] is not None:
+                    city = info['city'].decode('UTF-8')
+                caption = info['caption/abstract']
+                if caption is not None:
+                    caption = caption.decode('UTF-8')
+    
+    
     def generate(self,mode=None):
 
         assert mode in ('standalone-full',None,'')
