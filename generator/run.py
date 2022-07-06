@@ -10,7 +10,7 @@ import shutil,logging
 
 import pathlib
 from datetime import datetime
-import piexif
+from iptcinfo3 import IPTCInfo
 
 class Website_generator():
 
@@ -81,6 +81,16 @@ class Website_generator():
         return txt
 
     def json_from_dir(self,path,base_url=''):
+    
+        content_json = dict()
+        content_json = {'title':'',
+        'h1':'',
+        'text':'',
+        'text_en':'',
+        'map_center':'37.666,55.666',
+        'map_zoom':'12',
+        'date_mod':datetime.today().strftime('%Y-%m-%d')}
+        images = list()
         self.logger.debug(path)
         assert os.path.isdir(path)
         
@@ -94,7 +104,6 @@ class Website_generator():
                 path_as_list = temp_path.split(os.sep)
                 
                 url = base_url + '/' + os.path.join(path_as_list[-2],path_as_list[-1]) + '/' + filename
-                print(url)
                 '''
                 exif_dict = piexif.load(os.path.join(root,filename))
                 for ifd in ("0th", "Exif", "GPS", "1st"):
@@ -103,15 +112,30 @@ class Website_generator():
                 description = exif_dict['0th'].get(270,'')
                 print('d: ',description)
                 '''
-                from iptcinfo3 import IPTCInfo
+                
                 info = IPTCInfo(os.path.join(root,filename), force=True)
-                print(info['city'])
+                city = None
                 if info['city'] is not None:
                     city = info['city'].decode('UTF-8')
                 caption = info['caption/abstract']
                 if caption is not None:
                     caption = caption.decode('UTF-8')
-    
+                else:
+                    caption = ''
+                image = {'text':caption,'url':url}
+                if city is not None: image['city']=city
+                
+                images.append(image)
+
+        content_json['images'] = images
+        json_path = os.path.join(path,os.path.basename(path))+'.json'
+        #self.logger.debug(json_path)
+        with open(json_path, "wb") as outfile:
+            json_str = json.dumps(content_json, ensure_ascii=False,indent = 1).encode('utf8')
+            outfile.write(json_str)
+            #json.dump(content_json, outfile)
+        self.logger.debug(json_str)
+        
     
     def generate(self,mode=None):
 

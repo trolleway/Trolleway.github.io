@@ -12,7 +12,7 @@ RUN echo 'trolleway:user' | chpasswd
 
 
 RUN apt-get update && apt-get install --no-install-recommends -y python3-pip time
-RUN pip3 install exif piexif
+RUN pip3 install exif iptcinfo3
 
 
 #add to sudoers

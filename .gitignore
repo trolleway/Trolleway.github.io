@@ -2,3 +2,4 @@ generator/exif_cache
 exif_cache
 generator/out4standalone
 reports
+*.pyc
