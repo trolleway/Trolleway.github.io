@@ -80,6 +80,15 @@ class Website_generator():
         '''
         return txt
 
+    def get_body_from_html(self,html_text_filename):
+        assert os.path.exists(html_text_filename) , 'not found '+html_text_filename
+        with open(html_text_filename, encoding='utf-8') as text_file:
+            text = text_file.read()
+        
+        text = text[text.find('<body>')+6:text.find('</body>')].strip()
+        return text
+                    
+                    
     def coords_list_average(self,coords):
         return None
     def json_from_dir(self,path,base_url=''):
@@ -436,12 +445,18 @@ class Website_generator():
                 content_en = '<div class="en" >'+data['text_en']+'</div>'+"\n"
             else:
                 content_en = "\n"
-                
+            
+            if 'text_html' in data:
+                text = self.get_body_from_html(os.path.join(json_dir,json_filename).replace('.json','.htm'))
+            else:
+                text = data['text']
+                    
+                    
             print(coords_list)
 
             html = template.format(
                 title = data['title'],
-                text = data['text'],
+                text = text,
                 content_en = content_en,
                 h1 = data['h1'],
                 google_counter=google_counter,

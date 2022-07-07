@@ -31,3 +31,7 @@ user should manually move .json file to generator/content/
 * generate index.htm for each gallery
 * generate html pages
 * generate sitemap files
+
+### json 
+
+* if text_html key is exists in json, text for index page will be taken from htm file with same name as json
