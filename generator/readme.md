@@ -14,3 +14,20 @@ In container run:
 
 time python3 generator/run.py
 ```
+
+## Detailed process
+
+### dir2json.py
+
+* read folder with files
+* read each jpg in system alphabet order
+* create in this folder .json file with content: URL, IPTC City, IPTC Caption tags
+
+user should manually move .json file to generator/content/
+
+### run.py
+
+* read json files from generator/content/
+* generate index.htm for each gallery
+* generate html pages
+* generate sitemap files

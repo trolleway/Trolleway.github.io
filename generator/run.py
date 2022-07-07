@@ -80,6 +80,8 @@ class Website_generator():
         '''
         return txt
 
+    def coords_list_average(self,coords):
+        return None
     def json_from_dir(self,path,base_url=''):
     
         content_json = dict()
@@ -87,19 +89,21 @@ class Website_generator():
         'h1':'',
         'text':'',
         'text_en':'',
-        'map_center':'37.666,55.666',
+        'map_center':'55.666,37.666',
         'map_zoom':'12',
         'date_mod':datetime.today().strftime('%Y-%m-%d')}
         images = list()
         self.logger.debug(path)
         assert os.path.isdir(path)
         
+       
         record_template = '''    { "url": "{url}",
       "text": "{text}"
     },'''
         for (root,dirs,files) in os.walk(path):
             print(os.path.dirname(root))
             for filename in files:
+                if not filename.lower().endswith('.jpg'): continue
                 temp_path = os.path.normpath(path)
                 path_as_list = temp_path.split(os.sep)
                 
@@ -122,7 +126,7 @@ class Website_generator():
                     caption = caption.decode('UTF-8')
                 else:
                     caption = ''
-                image = {'text':caption,'url':url}
+                image = {'text':caption,'url_hotlink':url}
                 if city is not None: image['city']=city
                 
                 images.append(image)
@@ -180,6 +184,7 @@ class Website_generator():
         json_files = [f for f in os.listdir(json_dir) if os.path.isfile(os.path.join(json_dir, f)) and f.lower().endswith('.json')]
         assert len(json_files)>0,'must be find some .json files in '+json_dir
 
+        self.logger.info(" ".join(json_files))
         #generate article for each json
         for json_filename in json_files:
             with open(os.path.join(json_dir,json_filename), encoding='utf-8') as json_file:
@@ -221,7 +226,8 @@ class Website_generator():
             current_image = 0
 
             #calculate filenames for prev/next link
-
+            
+            coords_list = list()
             for image in data['images']:
                 current_image += 1
 
@@ -257,11 +263,15 @@ class Website_generator():
                 else:
                     photo_filename = pathlib.Path(image['url']).name
                 photo_local_cache = os.path.join(exif_cache_directory,photo_filename)
+                
                 if not os.path.exists(photo_local_cache):
                     try:
-                        urllib.request.urlretrieve(image['url'], photo_local_cache)
+                        if 'url_hotlink' in image.keys():
+                            urllib.request.urlretrieve(image['url_hotlink'], photo_local_cache)
+                        else:
+                            urllib.request.urlretrieve(image['url'], photo_local_cache)
                     except:
-                        print('cant download '+image['url'])
+                        print('cant download '+image.get('url','')+image.get('url_hotlink','')  )
 
                 #copy photo to website dir
 
@@ -277,6 +287,7 @@ class Website_generator():
                         image['url'] = photo_filename
                     elif 'url_hotlink' in image.keys():
                         image['url'] = image['url_hotlink']
+
 
                 # get photo coordinates from json if exists
 
@@ -305,14 +316,19 @@ class Website_generator():
 
                             lat = str(round(float(lat), 4))
                             lon = str(round(float(lon), 4))
+                            coord = list()
+                            coord.append(round(float(lat), 4))# , round(float(lon), 4))
+                            coord.append(round(float(lon), 4))# , round(float(lon), 4))
+
+                            coords_list.append( coord ) 
 
                             self.logger.debug('coordinates obtained from EXIF data of image '+photo_coord)
                     except:
                         photo_coord='0,0'
                         lat='0'
                         lon='0'
-
                 # print map
+
 
                 map_center = data['map_center']
                 if str(image.get('center_map'))=='1':
@@ -411,7 +427,8 @@ class Website_generator():
                 pages2sitemap.append({'loc':sitemap_base_url+output_directory_name+'/'+self.numfill(current_image)+'.htm','priority':'0.4','lastmod':GALLERY_DATE_MOD})
             pages2sitemap.append({'loc':sitemap_base_url+output_directory_name+'/'+'index.htm','priority':'0.6','lastmod':GALLERY_DATE_MOD})
 
-            # index page
+            # ----------- index page
+            
             with open(template_index_filepath, encoding='utf-8') as template_file:
                 template = template_file.read()
 
@@ -419,6 +436,9 @@ class Website_generator():
                 content_en = '<div class="en" >'+data['text_en']+'</div>'+"\n"
             else:
                 content_en = "\n"
+                
+            print(coords_list)
+
             html = template.format(
                 title = data['title'],
                 text = data['text'],
