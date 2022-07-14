@@ -408,6 +408,8 @@ class Website_generator():
                 '''
 
 
+                image_page_title = ''
+                image_page_title = image.get('city','') + ' ' + os.path.splitext(os.path.basename(image['url']))[0]  
                 #build html
 
                 html = str()
@@ -417,11 +419,14 @@ class Website_generator():
                 html = template.format(
                 image_url = image['url'],
                 caption = image['text'],
+                title = image_page_title,
                 url_left = url_left,
                 url_right = url_right,
                 rel_left = rel_left,
                 rel_right = rel_right,
                 map_js = map_js,
+                
+                city = image.get('city',''),
                 lat=lat,lon=lon,
                 right_link_image = right_link_image,
                 left_link_image = left_link_image,
@@ -459,6 +464,7 @@ class Website_generator():
                 text = text,
                 content_en = content_en,
                 h1 = data['h1'],
+                city = data.get('city',''),
                 google_counter=google_counter,
                 yandex_counter=yandex_counter
                 )

@@ -11,7 +11,7 @@ RUN groupadd -g $gid trolleway && useradd --home /home/trolleway -u $uid -g $gid
 RUN echo 'trolleway:user' | chpasswd
 
 
-RUN apt-get update && apt-get install --no-install-recommends -y python3-pip time
+RUN apt-get update && apt-get install --no-install-recommends -y python3-pip time imagemagick parallel
 RUN pip3 install exif iptcinfo3
 
 

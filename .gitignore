@@ -4,3 +4,7 @@ generator/out4standalone
 reports
 *.pyc
 *.pyc
+*.pyc
+
+t/*
+*.pyc

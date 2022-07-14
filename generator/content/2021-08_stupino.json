@@ -4,9 +4,9 @@
  "text": "",
  "text_html":"ok",
  "text_en": "",
- "map_center": "55.666,37.666",
- "map_zoom": "12",
- "date_mod": "2022-07-06",
+ "map_center": "55.0067,38.3584",
+ "map_zoom": "8",
+ "date_mod": "2022-07-13",
  "images": [
   {
    "text": "Удачная встреча: тепловоз ТЭМ15-076 на подъездном пути Воскресенского завода минеральных удобрений",
@@ -31,10 +31,6 @@
   {
    "text": "Деревня Ратмирово возле Воскресенска",
    "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210814_05.jpg"
-  },
-  {
-   "text": "",
-   "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210814_06.jpg"
   },
   {
    "text": "Вид Ратчинского парка в жаркую погоду",
@@ -111,31 +107,32 @@
    "city": "Stupino"
   },
   {
-   "text": "",
-   "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210815_24.jpg"
+   "text": "Почта в деревянном доме у станции Акри",
+   "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210815_24.jpg",
+   "city": "Stupino"
   },
   {
-   "text": "",
+   "text": "Электричка Павелецкого направления на станции Акри. ЭД4М-0421",
    "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210815_25.jpg"
   },
   {
-   "text": "",
+   "text": "В остаток дня я решил сьездить на несколько станций в противоположную от Москвы сторону, в Ожерелье, что бы ехать после толпы. Водонапорная башня.",
    "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210815_26.jpg"
   },
   {
-   "text": "",
+   "text": "Вид со станции Ожерелье в западном направлении",
    "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210815_27.jpg"
   },
   {
-   "text": "",
+   "text": "Хозяйственный магазин Арсенал в Ожерелье",
    "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210815_28.jpg"
   },
   {
-   "text": "",
+   "text": "Мотоцикл с коляской во дворах пятиэтажек",
    "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210815_29.jpg"
   },
   {
-   "text": "",
+   "text": "Пассажирский поезд на станции Ожерелье. ЭП2К-232",
    "url_hotlink": "https://trolleway.com/storage/2021/2021-08_stupino/20210815_30.jpg"
   }
  ]
