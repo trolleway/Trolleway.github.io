@@ -1,17 +1,26 @@
 {
  "title": "Фестиваль Ретрорейс 2022",
- "h1": "Фестиваль Ретрорейс 2022 на среднеформатный фотоаппарат",
- "text": "Попробовал снимать автомобили и автобусы на среднеформатный фотоаппарат Москва-5. <p>Fomapan 200, D-23 1+2 20 min",
- "text_en": "Photographs of preserved cars and buses from Moscow Retroreis festival. Taken on 6x6 Moskva-5 camera.",
+ "h1": "Фестиваль Ретрорейс 2022",
+ "text": "",
+ "text_en": "Photographs of preserved cars and buses from Moscow Retroreis festival.",
  "map_center": "55.7075,37.57",
  "map_zoom": "12",
  "date_mod": "2022-07-14",
  "images": [
   {
+   "text": "",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_044.JPG"
+  },  
+  {
    "text": "ГАЗ-21 к021ет199 на фестивале Ретрорейс",
    "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_02.jpg",
    "city": "Moscow"
   },
+    {
+   "text": "",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_059.JPG",
+   "city": "Moscow"
+  }, 
   {
    "text": "",
    "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_03.jpg",
@@ -20,6 +29,26 @@
   {
    "text": "ВАЗ-2103 у214ут799 на фестивале Ретрорейс",
    "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_04.jpg",
+   "city": "Moscow"
+  },
+  {
+   "text": "",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_077.JPG",
+   "city": "Moscow"
+  },
+  {
+   "text": "",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_079_lr.jpg",
+   "city": "Moscow"
+  },
+   {
+   "text": "",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_107.JPG",
+   "city": "Moscow"
+  },
+  {
+   "text": "",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_109.JPG",
    "city": "Moscow"
   },
   {
@@ -38,14 +67,45 @@
    "city": "Moscow"
   },
   {
-   "text": "Трамвай 71-623 2644 на кольце метро Октябрьская",
-   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_09.jpg",
+   "text": "Автобус ЛиАЗ-677М в677ес50 на фоне толпы у площадки фестиваля",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_170.JPG",
    "city": "Moscow"
   },
   {
-   "text": "Трамвай Витязь 31169 на кольце метро Октябрьская",
-   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_11.jpg",
+   "text": "Автобус ЛАЗ-699Р у793вн797 сзади",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_178.JPG",
+   "city": "Moscow"
+  },
+  {
+   "text": "Автобус ЛиАЗ-677М в677ес50 на подвозе от метро Университет к фестивалю Ретрорейс",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_186.JPG",
+   "city": "Moscow"
+  },
+  {
+   "text": "Автобус ЛиАЗ-677М в677ес50 сзади",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_190.JPG",
+   "city": "Moscow"
+  },
+  {
+   "text": "Автобус ЛАЗ-699Р у793вн797 на подвозе от метро Университет к фестивалю Ретрорейс",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_196_crop.JPG",
+   "city": "Moscow"
+  },
+  {
+   "text": "",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_200.JPG",
+   "city": "Moscow"
+  },
+  {
+   "text": "Автобус ЛиАЗ-677М в677ес50 на проспекте Вернадского",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_215_ShiftN.jpg",
+   "city": "Moscow"
+  },
+  {
+   "text": "Автобус ЛАЗ-699Р у793вн797 на подвозе от метро Университет к фестивалю Ретрорейс",
+   "url_hotlink": "https://trolleway.com/storage/2022/2022-07_retroreis/20220709_226.JPG",
    "city": "Moscow"
   }
+
  ]
 }

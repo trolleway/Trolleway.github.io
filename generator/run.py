@@ -451,10 +451,11 @@ class Website_generator():
             else:
                 content_en = "\n"
             
-            if 'text_html' in data:
-                text = self.get_body_from_html(os.path.join(json_dir,json_filename).replace('.json','.htm'))
+            html_text_filename = os.path.join(json_dir,json_filename).replace('.json','.htm')
+            if os.path.exists(html_text_filename):
+                text = self.get_body_from_html(html_text_filename)
             else:
-                text = data['text']
+                text = data.get('text','')
                     
                     
             print(coords_list)
